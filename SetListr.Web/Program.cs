@@ -39,9 +39,9 @@ builder.Services.AddAuthentication(oidcScheme)
                         // we need this for front-channel sign-out
                         options.SaveTokens = true;
                         options.ResponseType = OpenIdConnectResponseType.Code;
-                        options.RequireHttpsMetadata = false;
-                        options.ClientId = "setlistr-frontend";
-                        options.Scope.Add("setlistr:all");
+                        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+                        options.ClientId = builder.Configuration["Keycloak:ClientId"];
+                        options.Scope.Add(builder.Configuration["Keycloak:Scope"] ?? "setlistr:all");
                         options.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
                         options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                         options.Events = new OpenIdConnectEvents

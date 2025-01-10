@@ -22,14 +22,18 @@ else
 }
 
 @code {
-    [FromQuery] Guid Id { get; set; }
+    [Parameter] public string Id { get; set; }
 
     SetList? SetList { get; set; }
 
-    IQueryable<Song>? Songs => SetList?.Songs.AsQueryable();
+    IQueryable<Song>? Songs { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        SetList = await SetListApiClient.GetSetListAsync(Id);
+        if (Guid.TryParse(Id, out var guidId))
+        {
+            SetList = await SetListApiClient.GetSetListAsync(guidId);
+            Songs = SetList.Songs.ToArray().AsQueryable();
+        }
     }
 }

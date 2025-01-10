@@ -1,7 +1,11 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var keycloak = builder.AddKeycloak("keycloak", 8080)
+var keycloakAdminUser = builder.AddParameter("keycloakAdminUser", "admin", publishValueAsDefault: true);
+var keycloakAdminPassword = builder.AddParameter("keycloakAdminPassword", secret: true);
+
+var keycloak = builder.AddKeycloak("keycloak", 8080, keycloakAdminUser, keycloakAdminPassword)
                       .WithArgs("--verbose")
+                      .WithLifetime(ContainerLifetime.Persistent)
                       .WithRealmImport(@"../keycloak")
                       .WithDataVolume();
 

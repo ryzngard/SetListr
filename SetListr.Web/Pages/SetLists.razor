@@ -30,13 +30,21 @@ else
     protected override async Task OnInitializedAsync() 
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
-        if (NavManager.TryGetValue<Guid>("bandId", out var bandId))
+
+        try 
         {
-            Sets = await SetListApiClient.GetSetListsAsync(bandId, CancellationToken.None);
+            if (NavManager.TryGetValue<Guid>("bandId", out var bandId))
+            {
+                Sets = await SetListApiClient.GetSetListsAsync(bandId, CancellationToken.None);
+            }
+            else 
+            {
+                Sets = await SetListApiClient.GetSetListsAsync(bandId: null, CancellationToken.None);
+            }
         }
-        else 
+        catch (UnauthorizedAccessException)
         {
-            Sets = await SetListApiClient.GetSetListsAsync(bandId: null, CancellationToken.None);
+            NavManager.NavigateTo("/logout");
         }
     } 
 }

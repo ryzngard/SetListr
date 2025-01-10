@@ -1,3 +1,5 @@
+using System.Security.Claims;
+
 using SetListr.ApiService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +23,7 @@ builder.Services.AddAuthentication()
                     options =>
                     {
                         options.Audience = "setlistr.api";
-                        options.RequireHttpsMetadata = false;
+                        options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
                     });
 
 builder.Services.AddAuthorizationBuilder();
@@ -72,9 +74,9 @@ app.MapGet("/setLists", async (HttpContext httpContext) =>
     var user = httpContext.User;
 
     logger.LogInformation($"Getting set lists for user :: {user.Identity?.Name}");
-
-    if (user.Identity is { IsAuthenticated: true, Name: not null }
-        && setListManager.GetSetListsForUser(user.Identity.Name) is { } setListsForUser)
+    var username = GetUsername(user);
+    if (!string.IsNullOrEmpty(username)
+        && setListManager.GetSetListsForUser(username) is { } setListsForUser)
     {
         return Results.Ok(setListsForUser);
     }
@@ -84,6 +86,35 @@ app.MapGet("/setLists", async (HttpContext httpContext) =>
 .WithName("GetSetListsFromBand")
 .RequireAuthorization();
 
+app.MapGet("/setList/{id}", async (HttpContext httpContext) =>
+{
+    var setListManager = httpContext.RequestServices.GetRequiredService<SetListManager>();
+    var id = httpContext.Request.RouteValues["id"]?.ToString();
+
+    logger.LogInformation($"Getting set list {id}");
+
+    if (Guid.TryParse(id, out var setId) &&
+        setListManager.GetSetList(setId) is { } setList)
+    {
+        return Results.Ok(setList);
+    }
+
+    return Results.BadRequest();
+})
+.WithName("GetSetList")
+.RequireAuthorization();
+
 app.MapDefaultEndpoints();
 
 app.Run();
+
+
+static string? GetUsername(ClaimsPrincipal user)
+{
+    if (user is not { Identity: { IsAuthenticated: true } })
+    {
+        return null;
+    }
+
+    return user.Claims.FirstOrDefault(c => c.Type == "preferred_username")?.Value;
+}
