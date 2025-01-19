@@ -79,9 +79,9 @@ public class SetListManager
         return setLists.ToImmutableArray();
     }
 
-    internal SetList GetSetList(Guid setId)
+    internal SetList? GetSetList(Guid setId)
     {
-        return _setLists.First(s => s.Id == setId);
+        return _setLists.FirstOrDefault(s => s.Id == setId);
     }
 }
 

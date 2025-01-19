@@ -190,6 +190,37 @@ public record SetList(Guid Id, string Name, ImmutableArray<Song> Songs)
     public TimeSpan Duration => Songs.Any() 
         ? Songs.Select(s => s.Duration).Aggregate((t1, t2) => t1 + t2)
         : TimeSpan.Zero;
+
+    public SetList SwapSongs(Song from, Song to)
+    {
+        var indexFrom = Songs.IndexOf(from);
+        var indexTo = Songs.IndexOf(to);
+
+        var newSongs = Songs.ToArray();
+        newSongs[indexFrom] = to;
+        newSongs[indexTo] = from;
+
+        return this with { Songs = newSongs.ToImmutableArray() };
+    }
+
+    public SetList InsertSongAfter(Song before, Song after)
+    {
+        var newSongs = Songs.ToList();
+        newSongs.Remove(after);
+        var indexBefore = newSongs.IndexOf(before);
+        var newIndex = indexBefore + 1;
+
+        if (newIndex >= newSongs.Count)
+        {
+            newSongs.Add(after);
+            return this with { Songs = newSongs.ToImmutableArray() };
+        }
+        else 
+        {
+            newSongs.Insert(newIndex, after);
+            return this with { Songs = newSongs.ToImmutableArray() };
+        }
+    }
 }
 
 public record Band(Guid Id, string Name, ImmutableArray<Song> Songs, ImmutableArray<SetList> SetLists)
