@@ -78,6 +78,11 @@ public class SetListManager
 
         return setLists.ToImmutableArray();
     }
+
+    internal SetList? GetSetList(Guid setId)
+    {
+        return _setLists.FirstOrDefault(s => s.Id == setId);
+    }
 }
 
 

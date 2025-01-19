@@ -10,26 +10,77 @@ else
 {
     <FluentHeader>
         @SetList.Name
-        <FluentDivider />
-        @SetList.Duration
+        <FluentDivider Orientation="Orientation.Vertical" />
+        <span>TotalTime: @SetList.Duration</span>
     </FluentHeader>
-    <FluentDataGrid Items="@Songs">
-        <TemplateColumn Title="Name" Sortable="true" Align="Align.Start">
-            @context.Name
-        </TemplateColumn>
-        <PropertyColumn Property="@(p => p.Duration)" Sortable="true" />
-    </FluentDataGrid>
+    <FluentDragContainer 
+        TItem="Song"
+        OnDragStart="OnDragStart"
+        OnDragEnd="OnDragEnd"
+        OnDragEnter="OnDragEnter"
+        OnDragLeave="OnDragLeave">
+
+        <FluentGrid AdaptiveRendering="true" Spacing="0">
+            @foreach (var song in SetList.Songs)
+            {
+                <FluentGridItem xs="12">
+                    <FluentDropZone Id="@song.Id.ToString()" Draggable="true" Droppable="true" Item="@song">
+                        <FluentCard>
+                            @song.Name
+                            @song.Duration
+                        </FluentCard> 
+                    </FluentDropZone>
+                </FluentGridItem>
+            }
+        </FluentGrid>
+    </FluentDragContainer>
 }
 
 @code {
-    [FromQuery] Guid Id { get; set; }
+    [Parameter] public required string Id { get; set; }
 
     SetList? SetList { get; set; }
 
-    IQueryable<Song>? Songs => SetList?.Songs.AsQueryable();
+    IQueryable<Song>? Songs { get; set; }
+
+    Song? _lastEnteredSong;
 
     protected override async Task OnInitializedAsync()
     {
-        SetList = await SetListApiClient.GetSetListAsync(Id);
+        if (Guid.TryParse(Id, out var guidId))
+        {
+            SetList = await SetListApiClient.GetSetListAsync(guidId);
+
+            if (SetList is not null)
+                Songs = SetList.Songs.ToArray().AsQueryable();
+        }
+    }
+
+    private void OnDragStart(FluentDragEventArgs<Song> args)
+    {
+        Console.WriteLine($"Drag Start: {args.Source.Item.Name}");
+    }
+
+    private void OnDragEnd(FluentDragEventArgs<Song> args)
+    {
+        var beforeSong = _lastEnteredSong ?? args.Target.Item; 
+        var afterSong = args.Source.Item;
+
+        Console.WriteLine($"Adding {beforeSong} after {afterSong}");
+        SetList = SetList!.InsertSongAfter(beforeSong, afterSong);
+
+        _lastEnteredSong = null;
+        StateHasChanged();
+    }
+
+    private void OnDragEnter(FluentDragEventArgs<Song> args)
+    {
+        _lastEnteredSong = args.Target.Item;
+        Console.WriteLine($"Drag Enter: {args.Source.Item.Name} to {args.Target.Item.Name}");
+    }
+
+    private void OnDragLeave(FluentDragEventArgs<Song> args)
+    {
+        Console.WriteLine($"Drag Leave: {args.Source.Item.Name} from {args.Target.Item.Name}");
     }
 }
