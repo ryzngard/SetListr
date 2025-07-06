@@ -1,6 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SetListr.Avalonia.Models;
+namespace SetListr.Data;
 
 public class Song
 {

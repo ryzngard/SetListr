@@ -1,0 +1,28 @@
+@page "/setlists"
+@inject ISetListrDb Db
+@inject NavigationManager Navigation
+
+<h3>Setlists</h3>
+<br />
+<FluentButton @onclick="@(() => Navigation.NavigateTo("/setlists/edit"))">Add Setlist</FluentButton>
+
+<FluentDataGrid Items="_setLists"
+                Pagination="@_pagination"
+                TGridItem="Setlist"
+                AutoFit="true"
+                ResizableColumns="true"
+                RowSize="DataGridRowSize.Medium">
+
+  <PropertyColumn Property="@(s => s.Name)" Sortable="true" />
+  <PropertyColumn Property="@(s => s.Songs.Count)" Sortable="true" Title="Song Count" />
+  <PropertyColumn Property="@(s => s.Duration)" Sortable="true" Title="Total Duration" />
+  <TemplateColumn>
+      <FluentButton OnClick="@(() => Navigation.NavigateTo($"/setlists/edit/{context.Id}"))">
+        Edit    
+      </FluentButton>
+  </TemplateColumn>
+
+</FluentDataGrid>
+
+<FluentPaginator State="@_pagination" />
+

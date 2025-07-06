@@ -1,0 +1,43 @@
+@page "/artists"
+
+
+@using Microsoft.EntityFrameworkCore
+
+@inject ISetListrDb Db
+
+<h3>Artists</h3>
+@if (artists is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Song Count</th>
+                <th>Setlist Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var artist in artists)
+            {
+                <tr>
+                    <td>@artist.Name</td>
+                    <td>@artist.Songs.Count</td>
+                    <td>@artist.Setlists.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<SetListr.Data.Artist>? artists;
+
+    protected override void OnInitialized()
+    {
+        artists = Db.Artists.ToList();
+    }
+}

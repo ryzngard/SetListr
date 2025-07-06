@@ -1,0 +1,18 @@
+﻿@inherits FluentInputBase<TimeSpan>
+
+<FluentInputLabel ForId="@Id" Label="@Label" AriaLabel="@AriaLabel" ChildContent="@LabelTemplate" Required="@Required" />
+<fluent-text-field class="@($"{ClassValue}")"
+                   style="@StyleValue"
+                   id="@Id"
+                   autofocus="@Autofocus"
+                   appearance="@Microsoft.FluentUI.AspNetCore.Components.Extensions.EnumExtensions.ToAttributeValue(Appearance)"
+                   current-value="@Value.ToString(TimeFormat)"
+                   @onchange="@ChangeHandlerAsync"
+                   @oninput="@InputHandlerAsync"
+                   readonly="@ReadOnly"
+                   disabled="@Disabled"
+                   required="@Required"
+                   name="@Name"
+                   placeholder="@Placeholder"
+                   @attributes="@AdditionalAttributes" />
+

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using SetListr.Avalonia.ViewModels;
 using SetListr.Avalonia.Views;
+using SetListr.Data;
 
 namespace SetListr.Avalonia;
 

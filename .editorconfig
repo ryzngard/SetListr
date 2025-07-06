@@ -6,7 +6,10 @@ indent_style = space
 
 # Xml files
 [*.xml]
-indent_size = 2
+indent_size = 4
+
+[*.{razor, cshtml}]
+indent_size = 4
 
 # C# files
 [*.cs]

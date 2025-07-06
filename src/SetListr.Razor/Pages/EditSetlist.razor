@@ -1,0 +1,61 @@
+@page "/setlists/edit/{Id:int?}"
+@using Microsoft.FluentUI.AspNetCore.Components.Extensions
+@inject ISetListrDb Db
+@inject NavigationManager Navigation
+
+<FluentEditForm @ref="Form" Model="@_setlist" OnValidSubmit="SaveAsync">
+  <DataAnnotationsValidator />
+
+  <FluentStack Orientation="Orientation.Vertical" Width="100%;">
+    <FluentTextField Name="@NameFieldName" @bind-Value="@_setlist.Name" Appearance="FluentInputAppearance.Outline" Autofocus="true" Placeholder="Enter a setlist name..." Style="width: 100%" />
+    <FluentValidationMessage For="@(() => _setlist.Name)" />
+
+    <FluentSortableList Items="_setlist.Songs" OnUpdate="@SortList" Style="width: 100%">
+      <ItemTemplate Context="song">
+        <FluentGrid Justify="@Justification" Spacing="3" AdaptiveRendering="true" Style="width: 70%">
+          <FluentGridItem sm="1" HiddenWhen="GridItemHidden.XsAndDown">
+            <div class="card">
+              @_setlist.Songs.IndexOf(song)
+            </div>
+          </FluentGridItem>
+          <FluentGridItem xs="10" sm="3">
+            <div class="card">
+              @song.Name
+            </div>
+          </FluentGridItem>
+          <FluentGridItem xs="2" sm="3">
+            <div class="card">
+              @song.Duration.ToString(@"mm\:ss")
+            </div>
+          </FluentGridItem>
+        </FluentGrid>
+      </ItemTemplate>
+    </FluentSortableList>
+
+    <FluentSelect @ref="SongSelect"
+                  Items="@SongsNotInSetlist"
+                  TOption="Song"
+                  OptionText="@(s => s.Name)"
+                  SelectedOptionChanged="AddSong"
+                  Placeholder="Select a song..." />
+
+
+    <FluentDivider Orientation="Orientation.Horizontal" />
+
+    <FluentStack Orientation="Orientation.Horizontal">
+      <FluentButton Type="ButtonType.Submit">Save</FluentButton>
+      <FluentButton @onclick="Cancel">Cancel</FluentButton>
+    </FluentStack>
+
+    @* 
+    <FluentStack Style="margin-bottom: 24px;" VerticalAlignment="VerticalAlignment.Center">
+      <FluentLabel>Justify</FluentLabel>
+      <FluentSelect Items=@(Enum.GetValues<JustifyContent>())
+                    OptionValue="@(c => c.ToAttributeValue())"
+                    TOption="JustifyContent"
+                    Position="SelectPosition.Below"
+                    @bind-SelectedOption="@Justification" />
+    </FluentStack> *@
+  </FluentStack>
+</FluentEditForm>
+
