@@ -24,7 +24,10 @@ jobs:
     
     # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
     - name: Change base-tag in index.html from / to SetListr
-      run: sed -i 's/<base href="\/" \/>/<base href="\/SetListr\/" \/>/g' release/wwwroot/index.html
+      uses: SteveSandersonMS/ghaction-rewrite-base-href@v1.1.0
+      with:
+        html_path: 'release/wwwroot/index.html'
+        base_href: '/SetListr/'
     
     # copy index.html to 404.html to serve the same file when a file is not found
     - name: copy index.html to 404.html
