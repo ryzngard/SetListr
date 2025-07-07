@@ -17,7 +17,7 @@
   <PropertyColumn Property="@(s => s.Songs.Count)" Sortable="true" Title="Song Count" />
   <PropertyColumn Property="@(s => s.Duration)" Sortable="true" Title="Total Duration" />
   <TemplateColumn>
-      <FluentButton OnClick="@(() => Navigation.NavigateTo($"/setlists/edit/{context.Id}"))">
+      <FluentButton OnClick="@(() => Navigation.NavigateTo($"setlists/edit/{context.Id}"))">
         Edit    
       </FluentButton>
   </TemplateColumn>
