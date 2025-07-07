@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "SetListr.BlazorWasm",
   "resources": {
-    "hash": "sha256-tImzW+2JeE6nf0OJgf/dZnqaFMg+SOZ45yPNoDcBjXg=",
+    "hash": "sha256-l2A//8S6J4A2pJhWl453OJsizb7tL4CR6U8NMTcUMog=",
     "fingerprinting": {
       "Blazored.LocalStorage.12n6dz54qr.wasm": "Blazored.LocalStorage.wasm",
       "Microsoft.AspNetCore.Components.attvr8uxw4.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -80,9 +80,9 @@
       "System.cunp5qiwjj.wasm": "System.wasm",
       "netstandard.tdqrrr3cko.wasm": "netstandard.wasm",
       "System.Private.CoreLib.jzk0w6b5dr.wasm": "System.Private.CoreLib.wasm",
-      "SetListr.Data.9tc2pia0va.wasm": "SetListr.Data.wasm",
-      "SetListr.Razor.g8ops2yqxi.wasm": "SetListr.Razor.wasm",
-      "SetListr.BlazorWasm.od74tn0wca.wasm": "SetListr.BlazorWasm.wasm",
+      "SetListr.Data.xd6fyetw98.wasm": "SetListr.Data.wasm",
+      "SetListr.Razor.6la6nem3hb.wasm": "SetListr.Razor.wasm",
+      "SetListr.BlazorWasm.u6oji9ru5j.wasm": "SetListr.BlazorWasm.wasm",
       "dotnet.js": "dotnet.js",
       "dotnet.native.rtblh4npr3.js": "dotnet.native.js",
       "dotnet.native.aqhezbunpl.wasm": "dotnet.native.wasm",
@@ -185,9 +185,9 @@
       "System.Web.HttpUtility.3ehg3jgpuh.wasm": "sha256-CwuaWh1oo2hLyU9/oGKvJC6rdOd3BbjrXl5nUwcWW4U=",
       "System.cunp5qiwjj.wasm": "sha256-DM5iEENhrifGKn33Y7cqRzxC0OtHXYOKO13icwIazj8=",
       "netstandard.tdqrrr3cko.wasm": "sha256-r8occZDvliiQw1VRlJjL0UQftPl6+BrQiDX8HCnmfwY=",
-      "SetListr.Data.9tc2pia0va.wasm": "sha256-XY6P1WI4EUVseWmqMGi7vtPqnjpVx+umo5OowUdC/rc=",
-      "SetListr.Razor.g8ops2yqxi.wasm": "sha256-EDXfuzN10v+gdRDr1KAlgDrB0kiNlQ/w8fEv185LABU=",
-      "SetListr.BlazorWasm.od74tn0wca.wasm": "sha256-XPdqnSrMCcUFiPkuJHRsD8UFCS0MFz5rW9V+Anu5hkk="
+      "SetListr.Data.xd6fyetw98.wasm": "sha256-6wcjzoNa8DSdg8HjcYKlyowzvQeHnIw0t3eCZhdRgBI=",
+      "SetListr.Razor.6la6nem3hb.wasm": "sha256-GgpqWt+DWww9EHSCdX4mlJLM09eBqjKd2sKI3o8uDpY=",
+      "SetListr.BlazorWasm.u6oji9ru5j.wasm": "sha256-yrhxw7ROjJiPmuMBL1M0oi/iarQZVvX04vqe4AKAovQ="
     },
     "libraryInitializers": {
       "_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.lib.module.js": "sha256-saocpjMzEV/5RzpPqa9RdvQ2/NJEkHJesyHry6qfD4U="
