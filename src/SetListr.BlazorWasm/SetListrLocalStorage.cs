@@ -50,6 +50,19 @@ public class SetListrLocalStorage(ILocalStorageService localStorage, ISyncLocalS
         currentSongs = currentSongs.Except([storedSong]).ToArray();
 
         StoredSongs = currentSongs;
+
+        // Remove from setlists as well
+        var setlists = StoredSetlists;
+        foreach (var setlist in setlists)
+        {
+            if (setlist.SongIds.Contains(song.Id))
+            {
+                setlist.SongIds = setlist.SongIds.Except([song.Id]).ToList();
+            }
+        }
+
+        StoredSetlists = setlists;
+
         return Task.FromResult(true);
     }
 
