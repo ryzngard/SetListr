@@ -21,6 +21,6 @@ public partial class Songs
     }
     private void AddSongClicked(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {
-        Navigation.NavigateTo("/songs/add");
+        Navigation.NavigateTo("songs/add");
     }
 }
