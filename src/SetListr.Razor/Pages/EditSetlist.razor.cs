@@ -72,13 +72,13 @@ public partial class EditSetlist
     private async Task SaveAsync()
     {
         await Db.SaveAsync(_setlist);
-        Navigation.NavigateTo("/setlists");
+        Navigation.NavigateTo("setlists");
     }
 
     private void Cancel()
     {
         Db.ClearChanges();
-        Navigation.NavigateTo("/setlists");
+        Navigation.NavigateTo("setlists");
     }
 
     private void FieldChanged(object? sender, FieldChangedEventArgs e)

@@ -33,12 +33,12 @@ public partial class AddSong
     private async Task SubmitAsync()
     {
         await Db.SaveAsync(_newSong);
-        Navigation.NavigateTo("/songs");
+        Navigation.NavigateTo("songs");
     }
 
     private void GoBack()
     {
-        Navigation.NavigateTo("/songs");
+        Navigation.NavigateTo("songs");
     }
     private void FieldChanged(object? sender, FieldChangedEventArgs e)
     {
